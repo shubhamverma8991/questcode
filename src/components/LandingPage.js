@@ -1,6 +1,30 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
+  const navigate = useNavigate();
+
+  // Feature Box Component
+  const FeatureBox = ({ title, description }) => (
+    <div className="max-w-sm bg-card p-6 rounded-lg shadow-xl">
+      <h3 className="text-lg font-semibold text-orange-500 mb-2">{title}</h3>
+      <p className="text-white">{description}</p>
+    </div>
+  );
+
+  // Language Card Component
+  const LanguageCard = ({ name, image }) => {
+    const handleLanguageCardClick = (e) => {
+      console.log(`${name}`);
+      navigate(`/questions/${name.toLowerCase()}`);
+    };
+    return (
+      <div className="flex flex-col items-center bg-card  p-6 rounded-lg shadow-2xl w-40" onClick={handleLanguageCardClick}>
+        <img src={image} alt={`${name} logo`} className="h-16 w-16 mb-4" />
+        <h4 className="text-lg font-semibold text-orange-500">{name}</h4>
+      </div>
+    );
+  };
   // Scroll to the languages section
   const scrollToLanguages = () => {
     const languagesSection = document.getElementById("languages-section");
@@ -45,21 +69,5 @@ const LandingPage = () => {
     </div>
   );
 };
-
-// Feature Box Component
-const FeatureBox = ({ title, description }) => (
-  <div className="max-w-sm bg-gray-600 p-6 rounded-lg shadow-xl">
-    <h3 className="text-lg font-semibold text-orange-500 mb-2">{title}</h3>
-    <p className="text-white">{description}</p>
-  </div>
-);
-
-// Language Card Component
-const LanguageCard = ({ name, image }) => (
-  <div className="flex flex-col items-center bg-gray-600  p-6 rounded-lg shadow-2xl w-40">
-    <img src={image} alt={`${name} logo`} className="h-16 w-16 mb-4" />
-    <h4 className="text-lg font-semibold text-orange-500">{name}</h4>
-  </div>
-);
 
 export default LandingPage;
