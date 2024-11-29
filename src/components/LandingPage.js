@@ -12,7 +12,7 @@ const LandingPage = () => {
     <div className=" text-white min-h-screen">
       {/* Hero Section */}
       <section className="flex flex-col items-center justify-center text-center py-20 px-6">
-        <h1 className="text-4xl font-bold text-primary mb-4">Master Programming with QuestCode</h1>
+        <h1 className="text-4xl font-bold text-primary mb-4">Master Programming with PrepQuest</h1>
         <p className="text-white max-w-xl">
           Dive into coding study materials, explore questions, answers, and pseudo-code crafted for clarity.
         </p>
@@ -23,7 +23,7 @@ const LandingPage = () => {
 
       {/* Features Section */}
       <section className="py-16 px-6">
-        <h2 className="text-2xl font-bold text-center text-orange-500 mb-6">Why Choose QuestCode?</h2>
+        <h2 className="text-2xl font-bold text-center text-orange-500 mb-6">Why Choose PrepQuest?</h2>
         <div className="flex flex-wrap justify-center gap-8">
           <FeatureBox title="Comprehensive Materials" description="Questions, answers, and pseudo-code for deeper understanding." />
           <FeatureBox title="Language Variety" description="Learn from a wide range of programming languages." />
