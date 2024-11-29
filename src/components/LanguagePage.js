@@ -30,7 +30,11 @@ const LanguagePage = () => {
           <div key={q.id} className="bg-card p-6 rounded-lg shadow-md">
             <h3 className="text-xl font-bold text-secondary mb-2">{q.question}</h3>
             <p className="text-white mb-4">{q.answer}</p>
-            {q.pseudoCode && <pre className="bg-gray-800 text-gray p-4 rounded-md overflow-x-auto">{q.pseudoCode}</pre>}
+            {q.pseudoCode && (
+              <div className="overflow-x-auto bg-gray-800 text-gray p-4 rounded-md">
+                <pre className="whitespace-pre-wrap break-words">{q.pseudoCode}</pre>
+              </div>
+            )}
           </div>
         ))}
       </div>
