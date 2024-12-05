@@ -154,6 +154,7 @@ const LanguagePage = () => {
                       minimap: { enabled: false },
                       scrollBeyondLastLine: false, // Prevent the editor from scrolling past the last line
                     }}
+                    style={{ backgroundColor: "#1e1e1e", color: "white" }}
                   />
                 </div>
               )}
