@@ -153,6 +153,8 @@ const LanguagePage = () => {
                       readOnly: true,
                       minimap: { enabled: false },
                       scrollBeyondLastLine: false, // Prevent the editor from scrolling past the last line
+                      wordWrap: "on", // Enable word wrap to format code based on screen size
+                      wrappingIndent: "same", // Ensure consistent indentation when wrapping occurs
                     }}
                     style={{ backgroundColor: "#1e1e1e", color: "white" }}
                   />
