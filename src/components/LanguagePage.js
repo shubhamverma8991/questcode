@@ -1,9 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { LuCopy } from "react-icons/lu";
+import MonacoEditor from "@monaco-editor/react"; // Import Monaco Editor
 
 const LanguagePage = () => {
   const { name } = useParams();
+  const [editorHeight, setEditorHeight] = useState("200px");
+  const editorRef = useRef(null);
+
   useEffect(() => {
     console.log(name);
   }, [name]);
@@ -16,20 +20,33 @@ const LanguagePage = () => {
       .catch((err) => console.error("Failed to copy code: ", err));
   };
 
-  // Fetch questions and pseudo-code dynamically (updated format)
+  const handleEditorDidMount = (editor) => {
+    editorRef.current = editor;
+    editor.layout(); // Ensure Monaco layout is recalculated after mounting
+    resizeEditor(editor.getValue()); // Initial resize based on editor content
+  };
+
+  const resizeEditor = (content) => {
+    const lineCount = content.split("\n").length;
+    const lineHeight = 20;
+    const newHeight = lineCount * lineHeight;
+    setEditorHeight(`${Math.max(newHeight + 40, 200)}px`); // Ensure minimum height of 200px
+  };
+
+  // Example of dynamically fetched questions
   const questions = [
     {
       id: 3,
-      question: "Explain the difference between `var`, `let`, and `const` in JavaScript.",
+      question: "Explain the difference between var, let, and const in JavaScript.",
       content: [
         {
           type: "text",
-          value: "`var` is function-scoped and can be redeclared, leading to potential issues with variable hoisting.",
+          value: "var is function-scoped and can be redeclared, leading to potential issues with variable hoisting.",
         },
         {
           type: "text",
           value:
-            "`let` and `const` are block-scoped. `let` allows reassignment, while `const` creates read-only constants that cannot be reassigned.",
+            "let and const are block-scoped. let allows reassignment, while const creates read-only constants that cannot be reassigned.",
         },
         {
           type: "code",
@@ -49,10 +66,11 @@ const LanguagePage = () => {
         },
         {
           type: "text",
-          value: "Use `let` and `const` to ensure better scoping and avoid issues with variable redeclaration.",
+          value: "Use let and const to ensure better scoping and avoid issues with variable redeclaration.",
         },
       ],
-      askedInCompany: "TechCorp", // New field added
+      askedInCompany: "TechCorp",
+      language: "javascript", // Language associated with the code block
     },
     {
       id: 2,
@@ -78,7 +96,8 @@ const LanguagePage = () => {
           value: "This approach improves performance and simplifies code by reducing the number of event listeners.",
         },
       ],
-      askedInCompany: "CodeLabs", // New field added
+      askedInCompany: "CodeLabs",
+      language: "javascript", // Language associated with the code block
     },
     {
       id: 1,
@@ -97,11 +116,11 @@ const LanguagePage = () => {
           value: "Closures are commonly used in JavaScript for data hiding and creating private variables.",
         },
       ],
-      askedInCompany: "", // New field added
+      askedInCompany: "",
+      language: "javascript", // Language associated with the code block
     },
   ];
 
-  // Sorting questions by 'id' before rendering
   const sortedQuestions = questions.sort((a, b) => a.id - b.id);
 
   return (
@@ -115,26 +134,35 @@ const LanguagePage = () => {
             <div key={index} className="mb-4">
               {block.type === "text" && <p className="text-white">{block.value}</p>}
               {block.type === "code" && (
-                <div className="overflow-x-auto bg-gray-800 text-gray p-4 rounded-md relative">
+                <div className="overflow-x-auto bg-gray-800 text-gray p-4 rounded-md relative" style={{ width: "100%" }}>
                   <button
-                    className="absolute top-2 right-2 bg-black text-white hover:scale-110 transition-transform px-2 py-1 rounded text-sm"
+                    className="absolute top-4 right-4 bg-black text-white hover:scale-110 transition-transform px-2 py-1 rounded text-sm z-10"
                     onClick={() => handleCopyCode(block.value)}
                     aria-label="Copy code"
                   >
                     <LuCopy />
                   </button>
-                  <pre className="whitespace-pre-wrap break-words">{block.value.join("\n")}</pre>
+                  <MonacoEditor
+                    height={editorHeight}
+                    language={q.language}
+                    value={block.value.join("\n")}
+                    editorDidMount={handleEditorDidMount}
+                    onChange={(value) => resizeEditor(value)} // Resize on content change
+                    options={{
+                      theme: "vs-dark",
+                      readOnly: true,
+                      minimap: { enabled: false },
+                      scrollBeyondLastLine: false, // Prevent the editor from scrolling past the last line
+                    }}
+                  />
                 </div>
               )}
             </div>
           ))}
-          {/* Displaying the askedInCompany field at the bottom */}
-          {q.askedInCompany ? (
+          {q.askedInCompany && (
             <p className="text-sm text-gray-500 mt-4">
               Asked in: <span className="font-semibold">{q.askedInCompany}</span>
             </p>
-          ) : (
-            <p className="text-sm text-gray-500 mt-4"></p>
           )}
         </div>
       ))}

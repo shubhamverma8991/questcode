@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "monaco-editor/min/vs/editor/editor.main.css";
 
 * {
   box-sizing: border-box;
