@@ -5,6 +5,8 @@ import Header from "./components/Header";
 import LandingPage from "./components/LandingPage";
 import LanguagePage from "./components/LanguagePage";
 import ScrollToTop from "./components/commonLogic/ScrollToTop";
+import CreateLanguageForm from "./components/CreateLanguageForm";
+import QuestionForm from "./components/QuestionForm";
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/questions/:name" element={<LanguagePage />} />
+          <Route path="/addlang" element={<CreateLanguageForm />} />
+          <Route path="/addques" element={<QuestionForm />} />
         </Routes>
         <Footer />
       </div>

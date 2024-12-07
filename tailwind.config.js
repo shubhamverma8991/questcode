@@ -17,6 +17,9 @@ module.exports = {
         error: "#FF4D4D",
         info: "#4DAFFF",
       },
+      screens: {
+        "max-sm": { max: "640px" }, // custom max-width breakpoint for 640px
+      },
     },
   },
   plugins: [],

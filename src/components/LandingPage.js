@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getAllLanguages } from "../service/axios";
 
 const LandingPage = () => {
   const navigate = useNavigate();
+  const [languages, setLanguages] = useState([]);
+
+  useEffect(() => {
+    getAllLanguages()
+      .then((data) => {
+        setLanguages(data);
+        console.log("language ", data);
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
   // Feature Box Component
   const FeatureBox = ({ title, description }) => (
@@ -60,10 +71,10 @@ const LandingPage = () => {
         <h2 className="text-2xl font-bold text-center text-orange-500 mb-6">Explore Languages</h2>
         <div className="flex flex-wrap justify-center gap-8">
           {/* Replace with dynamic data later */}
-          <LanguageCard name="JavaScript" image="/path-to-js-logo.png" />
-          <LanguageCard name="Python" image="/path-to-python-logo.png" />
+          {languages && languages.map((item) => <LanguageCard key={item.id} name={item.languageName} image={item.languageIcon} />)}
+          {/* <LanguageCard name="Python" image="/path-to-python-logo.png" />
           <LanguageCard name="Java" image="/path-to-java-logo.png" />
-          <LanguageCard name="C++" image="/path-to-cpp-logo.png" />
+          <LanguageCard name="C++" image="/path-to-cpp-logo.png" /> */}
         </div>
       </section>
     </div>
