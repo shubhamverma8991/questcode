@@ -12,14 +12,16 @@ function App() {
   return (
     <Router>
       <ScrollToTop />
-      <div className="bg-background h-full">
+      <div className="min-h-screen flex flex-col bg-background">
         <Header />
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/questions/:name" element={<LanguagePage />} />
-          <Route path="/addlang" element={<CreateLanguageForm />} />
-          <Route path="/addques" element={<QuestionForm />} />
-        </Routes>
+        <div className="flex-grow">
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/questions/:name" element={<LanguagePage />} />
+            <Route path="/addlang" element={<CreateLanguageForm />} />
+            <Route path="/addques" element={<QuestionForm />} />
+          </Routes>
+        </div>
         <Footer />
       </div>
     </Router>

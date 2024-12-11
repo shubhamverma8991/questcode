@@ -9,3 +9,25 @@
   padding: 0;
   color: white;
 }
+.highlight {
+  font-weight: bold;
+  color: #ff6600;
+  background-color: #fdf4e3;
+  padding: 1px;
+  border-radius: 3px;
+}
+.listitem {
+  list-style: none; /* Remove the default bullet */
+  position: relative; /* Establish a positioning context for the pseudo-element */
+  padding-left: 20px; /* Space for the custom bullet */
+  margin: 5px 0px;
+}
+
+.listitem::before {
+  content: "\2022"; /* Unicode for bullet character */
+  color: #ff6600; /* Change this to your desired color */
+  font-size: 16px; /* Adjust size if needed */
+  position: absolute;
+  left: 0;
+  top: 0;
+}

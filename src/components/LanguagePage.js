@@ -1,95 +1,54 @@
-import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
-import { LuCopy } from "react-icons/lu";
-import MonacoEditor from "@monaco-editor/react"; // Import Monaco Editor
+import { useEffect, useState } from "react";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { getQuestionsByLanguage } from "../service/axios";
+import Loading from "./commonLogic/Loading";
+import DOMPurify from "dompurify"; // Import DOMPurify
 
 const LanguagePage = () => {
-  const { name } = useParams(); // `name` is the language name from URL
-  const [editorHeight, setEditorHeight] = useState("200px");
+  const { name } = useParams();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const initialPage = parseInt(queryParams.get("page")) || 0; // Default to 0 if not present
+  const [page, setPage] = useState(initialPage);
+  const navigate = useNavigate();
   const [questions, setQuestions] = useState([]);
-  const editorRef = useRef(null);
+  const [loading, setLoading] = useState(true);
+  // const [size, setSize] = useState(10);
 
   useEffect(() => {
     // Fetch questions dynamically for the specified language
-    getQuestionsByLanguage(name)
+    getQuestionsByLanguage(name, page, 10) // Pass page and size to the API call
       .then((apiResponse) => {
-        // Parse the content to JSON
-        const parsedQuestions = apiResponse.map((q) => ({
-          ...q,
-          content: JSON.parse(q.content), // Parse the content string into an array of blocks
-        }));
-        setQuestions(parsedQuestions);
-        console.log("questions ", parsedQuestions);
+        if (apiResponse.data.length > 0) {
+          setQuestions(apiResponse.data);
+        }
       })
       .catch((error) => {
         console.error("Error fetching questions: ", error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
-  }, [name]); // Dependency array to re-fetch when language name changes
+  }, [name, page]); // Add page and size to the dependency array
 
-  const handleCopyCode = (code) => {
-    const codeString = code.join("\n");
-    navigator.clipboard
-      .writeText(codeString)
-      .then(() => alert("Code copied to clipboard!"))
-      .catch((err) => console.error("Failed to copy code: ", err));
-  };
+  useEffect(() => {
+    // Update the URL with the current page number
+    navigate(`/questions/${name}?page=${page}`);
+  }, [name, page, navigate]);
 
-  const handleEditorDidMount = (editor) => {
-    editorRef.current = editor;
-    editor.layout(); // Ensure Monaco layout is recalculated after mounting
-    resizeEditor(editor.getValue()); // Initial resize based on editor content
-  };
-
-  const resizeEditor = (content) => {
-    const lineCount = content.split("\n").length;
-    const lineHeight = 20;
-    const newHeight = lineCount * lineHeight;
-    setEditorHeight(`${Math.max(newHeight + 40, 200)}px`); // Ensure minimum height of 200px
-  };
-
-  const sortedQuestions = questions.sort((a, b) => a.id - b.id);
+  if (loading) {
+    return <Loading fullScreen={true} />; // Full-screen loading
+  }
 
   return (
     <div className="space-y-6">
-      {sortedQuestions.length > 0 ? (
-        sortedQuestions.map((q) => (
+      {questions.length > 0 ? (
+        questions.map((q) => (
           <div key={q.id} className="bg-card p-6 max-sm:px-3 rounded-lg shadow-md">
             <h3 className="text-xl font-bold text-secondary mb-2">
               {q.id}. {q.question}
             </h3>
-            {q.content.map((block, index) => (
-              <div key={index} className="mb-4">
-                {block.type === "text" && <p className="text-white">{block.value}</p>}
-                {block.type === "code" && (
-                  <div className="overflow-x-auto bg-gray-800 text-gray p-4 max-sm:p-2 rounded-md relative" style={{ width: "100%" }}>
-                    <button
-                      className="absolute top-4 right-4 max-sm:top-3 max-sm:right-3 bg-black text-white hover:scale-110 transition-transform px-2 py-1 rounded text-sm z-10"
-                      onClick={() => handleCopyCode(block.value)}
-                      aria-label="Copy code"
-                    >
-                      <LuCopy />
-                    </button>
-                    <MonacoEditor
-                      height={editorHeight}
-                      language={q.language}
-                      value={block.value.join("\n")}
-                      editorDidMount={handleEditorDidMount}
-                      onChange={(value) => resizeEditor(value)} // Resize on content change
-                      options={{
-                        theme: "vs-dark",
-                        readOnly: true,
-                        minimap: { enabled: false },
-                        scrollBeyondLastLine: false, // Prevent the editor from scrolling past the last line
-                        wordWrap: "on", // Enable word wrap to format code based on screen size
-                        wrappingIndent: "same", // Ensure consistent indentation when wrapping occurs
-                      }}
-                      style={{ backgroundColor: "#1e1e1e", color: "white" }}
-                    />
-                  </div>
-                )}
-              </div>
-            ))}
+            <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(q.content) }} />
             {q.askedInCompany && (
               <p className="text-sm text-gray-500 mt-4">
                 Asked in: <span className="font-semibold">{q.askedInCompany}</span>
@@ -104,6 +63,23 @@ const LanguagePage = () => {
           </h1>
         </div>
       )}
+      {/* Pagination Controls */}
+      <div className="flex justify-center mt-6">
+        <button
+          onClick={() => setPage((prev) => Math.max(prev - 1, 0))}
+          disabled={page === 0}
+          className={`bg-primary text-black font-bold py-2 px-4 rounded-lg mx-2 transition duration-300 
+                      ${page === 0 ? "bg-gray-400 cursor-not-allowed" : "hover:bg-black hover:text-white"}`}
+        >
+          Previous
+        </button>
+        <button
+          onClick={() => setPage((prev) => prev + 1)}
+          className="bg-primary font-bold text-black py-2 px-4 rounded-lg mx-2 transition duration-300 hover:bg-black hover:text-white"
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 };

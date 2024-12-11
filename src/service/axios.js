@@ -10,6 +10,8 @@ const api = axios.create({
 
 // Helper function to handle GET requests
 const getRequest = (url) => {
+  console.log(url);
+
   return api
     .get(url)
     .then((response) => response.data)
@@ -54,12 +56,12 @@ const deleteRequest = (url) => {
 
 // Exporting API functions to use dynamically across the project
 // Language API functions
-export const getAllLanguages = () => getRequest("/languages");
+export const getAllLanguages = () => getRequest("/language/all");
 
 export const createLanguage = (data) => postRequest("/languages", data);
 
 // Question API functions based on Language
-export const getQuestionsByLanguage = (languageName) => getRequest(`/questions/${languageName}`);
+export const getQuestionsByLanguage = (languageName, page, size) => getRequest(`/questions/${languageName}?page=${page}&size=${size}`);
 
 export const getQuestionById = (languageName, id) => getRequest(`/questions/${languageName}/${id}`);
 

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAllLanguages } from "../service/axios";
+import Loading from "./commonLogic/Loading";
 
 const LandingPage = () => {
   const navigate = useNavigate();
   const [languages, setLanguages] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getAllLanguages()
@@ -12,7 +14,10 @@ const LandingPage = () => {
         setLanguages(data);
         console.log("language ", data);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => console.error(err))
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
   // Feature Box Component
@@ -70,11 +75,11 @@ const LandingPage = () => {
       <section id="languages-section" className="py-16 px-6">
         <h2 className="text-2xl font-bold text-center text-orange-500 mb-6">Explore Languages</h2>
         <div className="flex flex-wrap justify-center gap-8">
-          {/* Replace with dynamic data later */}
-          {languages && languages.map((item) => <LanguageCard key={item.id} name={item.languageName} image={item.languageIcon} />)}
-          {/* <LanguageCard name="Python" image="/path-to-python-logo.png" />
-          <LanguageCard name="Java" image="/path-to-java-logo.png" />
-          <LanguageCard name="C++" image="/path-to-cpp-logo.png" /> */}
+          {loading ? (
+            <Loading />
+          ) : (
+            languages && languages.map((item) => <LanguageCard key={item.id} name={item.languageName} image={item.languageIcon} />)
+          )}
         </div>
       </section>
     </div>
