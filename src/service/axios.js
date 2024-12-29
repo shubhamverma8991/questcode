@@ -2,7 +2,9 @@ import axios from "axios";
 
 // Create an Axios instance with default settings
 const api = axios.create({
-  baseURL: "http://localhost:8080/api", // Adjust the base URL to match your backend
+  // baseURL: "http://localhost:8080/api",
+  baseURL: "https://prepquestbackend.onrender.com/api/",
+  // Adjust the base URL to match your backend
   headers: {
     "Content-Type": "application/json",
   },
@@ -62,6 +64,9 @@ export const createLanguage = (data) => postRequest("/languages", data);
 
 // Question API functions based on Language
 export const getQuestionsByLanguage = (languageName, page, size) => getRequest(`/questions/${languageName}?page=${page}&size=${size}`);
+
+export const getCodingQuestionsByLanguage = (languageName, page, size) =>
+  getRequest(`/codequestions/${languageName}?page=${page}&size=${size}`);
 
 export const getQuestionById = (languageName, id) => getRequest(`/questions/${languageName}/${id}`);
 

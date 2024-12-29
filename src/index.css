@@ -9,6 +9,11 @@
   padding: 0;
   color: white;
 }
+.sub-heading {
+  font-weight: bold;
+  font-size: 18px;
+  margin: 5px 0;
+}
 .highlight {
   font-weight: bold;
   color: #ff6600;
@@ -30,4 +35,73 @@
   position: absolute;
   left: 0;
   top: 0;
+}
+.code-container {
+  position: relative;
+}
+/* Clipboard button */
+.clipboard-button {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  padding: 6px 12px; /* Comfortable button size */
+  font-size: 14px; /* Standard font size */
+  color: #ffffff; /* White text */
+  background-color: grey; /* Blue button */
+  border: none; /* Remove default border */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Pointer on hover */
+  z-index: 10; /* Ensure it's above the code content */
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+.clipboard-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Code block styling */
+.codeblock {
+  margin: 10px 0;
+  position: relative;
+  padding: 6px; /* Padding around code */
+  font-family: "Courier New", Courier, monospace; /* Monospaced font */
+  font-size: 14px; /* Standard font size */
+  line-height: 1.6; /* Spacing between lines */
+  overflow-x: auto; /* Horizontal scrolling for long lines */
+  white-space: pre-wrap; /* Preserve whitespace and allow wrapping */
+  color: #e0e0e0; /* Light gray for text */
+  background-color: #2a2a2a; /* Very dark gray background */
+  border-radius: 8px; /* Rounded corners */
+  border: 1px solid white;
+}
+
+/* Syntax highlighting adjustments */
+.codeblock > div > code .keyword {
+  color: #c586c0; /* Lavender for keywords */
+  font-weight: bold; /* Bold for keywords */
+}
+
+.codeblock > div > code .string {
+  color: #ce9178; /* Warm orange for strings */
+}
+
+.codeblock > div > code .number {
+  color: #b5cea8; /* Soft green for numbers */
+}
+
+.codeblock > div > code .comment {
+  color: #75715e; /* Muted gray for comments */
+  font-style: italic; /* Italics for comments */
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .clipboard-button {
+    font-size: 12px; /* Smaller button size */
+    padding: 4px 8px; /* Reduced padding */
+  }
+
+  .codeblock {
+    font-size: 13px; /* Slightly smaller font */
+  }
 }

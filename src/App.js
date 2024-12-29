@@ -7,6 +7,8 @@ import LanguagePage from "./components/LanguagePage";
 import ScrollToTop from "./components/commonLogic/ScrollToTop";
 import CreateLanguageForm from "./components/CreateLanguageForm";
 import QuestionForm from "./components/QuestionForm";
+import CodingQuestions from "./components/CodingQuestions";
+import OptionsPage from "./components/commonLogic/OptionsPage";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/questions/:name" element={<LanguagePage />} />
+            <Route path="/codequestions/:name" element={<CodingQuestions />} />
+            <Route path="/options/:name" element={<OptionsPage />} />
             <Route path="/addlang" element={<CreateLanguageForm />} />
             <Route path="/addques" element={<QuestionForm />} />
           </Routes>

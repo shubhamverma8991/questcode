@@ -1,11 +1,11 @@
-import { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import { getQuestionsByLanguage } from "../service/axios";
+import { getCodingQuestionsByLanguage } from "../service/axios";
 import Loading from "./commonLogic/Loading";
 import DOMPurify from "dompurify"; // Import DOMPurify
 import { MdOutlineContentCopy } from "react-icons/md";
 
-const LanguagePage = () => {
+const CodingQuestions = () => {
   const { name } = useParams();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -20,7 +20,7 @@ const LanguagePage = () => {
 
   useEffect(() => {
     // Fetch questions dynamically for the specified language
-    getQuestionsByLanguage(name, page, 10) // Pass page and size to the API call
+    getCodingQuestionsByLanguage(name, page, 10) // Pass page and size to the API call
       .then((apiResponse) => {
         if (apiResponse.data.length > 0) {
           console.log(apiResponse.data);
@@ -37,7 +37,7 @@ const LanguagePage = () => {
 
   useEffect(() => {
     // Update the URL with the current page number
-    navigate(`/questions/${name}?page=${page}`);
+    navigate(`/codequestions/${name}?page=${page}`);
   }, [name, page, navigate]);
 
   // Clipboard function directly inside the component
@@ -96,7 +96,7 @@ const LanguagePage = () => {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-center text-3xl mt-3 mb-3 text-secondary font-bold">{name.toUpperCase()} Theory Questions</h2>
+      <h2 className="text-center text-3xl mt-3 mb-3 text-secondary font-bold">{name.toUpperCase()} Coding Questions</h2>
       {questions.length > 0 ? (
         questions.map((q) => (
           <div key={q.id} className="bg-card p-6 max-sm:px-3 rounded-lg shadow-md">
@@ -104,9 +104,6 @@ const LanguagePage = () => {
               {q.id}. {q.question}
             </h3>
             <div className="code-container">{renderContent(q.content, q.id)}</div>
-            {q.imageExplain && (
-              <img src={q.imageExplain} alt="Explanation" className="max-w-full h-auto mt-4 border border-gray-300 rounded-lg shadow-md" />
-            )}
             {q.askedInCompany && (
               <p className="text-sm text-gray-500 mt-4">
                 Asked in: <span className="font-semibold">{q.askedInCompany}</span>
@@ -149,4 +146,4 @@ const LanguagePage = () => {
   );
 };
 
-export default LanguagePage;
+export default CodingQuestions;

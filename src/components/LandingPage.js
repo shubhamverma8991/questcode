@@ -32,10 +32,10 @@ const LandingPage = () => {
   const LanguageCard = ({ name, image }) => {
     const handleLanguageCardClick = (e) => {
       console.log(`${name}`);
-      navigate(`/questions/${name.toLowerCase()}`);
+      navigate(`/options/${name.toLowerCase()}`);
     };
     return (
-      <div className="flex flex-col items-center bg-card  p-6 rounded-lg shadow-2xl w-40" onClick={handleLanguageCardClick}>
+      <div className="cursor-pointer flex flex-col items-center bg-card  p-6 rounded-lg shadow-2xl w-40" onClick={handleLanguageCardClick}>
         <img src={image} alt={`${name} logo`} className="h-16 w-16 mb-4" />
         <h4 className="text-lg font-semibold text-orange-500">{name}</h4>
       </div>
