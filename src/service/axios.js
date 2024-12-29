@@ -66,7 +66,7 @@ export const createLanguage = (data) => postRequest("/languages", data);
 export const getQuestionsByLanguage = (languageName, page, size) => getRequest(`/questions/${languageName}?page=${page}&size=${size}`);
 
 export const getCodingQuestionsByLanguage = (languageName, page, size) =>
-  getRequest(`/codequestions/${languageName}?page=${page}&size=${size}`);
+  getRequest(`/questions/${languageName}code?page=${page}&size=${size}`);
 
 export const getQuestionById = (languageName, id) => getRequest(`/questions/${languageName}/${id}`);
 
