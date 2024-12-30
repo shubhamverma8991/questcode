@@ -15,16 +15,22 @@ const CodingQuestions = () => {
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const [hasMore, setHasMore] = useState(true); // Track if more data is available
+
   // Use ref to store references for each code block dynamically
   const codeBlockRefs = useRef({});
 
   useEffect(() => {
     // Fetch questions dynamically for the specified language
+    setLoading(true);
     getCodingQuestionsByLanguage(name, page, 10) // Pass page and size to the API call
       .then((apiResponse) => {
         if (apiResponse.data.length > 0) {
           console.log(apiResponse.data);
           setQuestions(apiResponse.data);
+          setHasMore(apiResponse.data.length === 10);
+        } else {
+          setHasMore(false);
         }
       })
       .catch((error) => {
@@ -127,20 +133,25 @@ const CodingQuestions = () => {
       )}
       {/* Pagination Controls */}
       <div className="flex justify-center mt-6">
-        <button
-          onClick={() => setPage((prev) => Math.max(prev - 1, 0))}
-          disabled={page === 0}
-          className={`bg-primary text-black font-bold py-2 px-4 rounded-lg mx-2 transition duration-300 
-                      ${page === 0 ? "bg-gray-400 cursor-not-allowed" : "hover:bg-black hover:text-white"}`}
-        >
-          Previous
-        </button>
-        <button
-          onClick={() => setPage((prev) => prev + 1)}
-          className="bg-primary font-bold text-black py-2 px-4 rounded-lg mx-2 transition duration-300 hover:bg-black hover:text-white"
-        >
-          Next
-        </button>
+        {/* Show the Previous button only if the current page is greater than 0 */}
+        {page > 0 && (
+          <button
+            onClick={() => setPage((prev) => Math.max(prev - 1, 0))}
+            className="bg-primary text-black font-bold py-2 px-4 rounded-lg mx-2 transition duration-300 hover:bg-black hover:text-white"
+          >
+            Previous
+          </button>
+        )}
+
+        {/* Show the Next button only if there is more data */}
+        {hasMore && (
+          <button
+            onClick={() => setPage((prev) => prev + 1)}
+            className="bg-primary font-bold text-black py-2 px-4 rounded-lg mx-2 transition duration-300 hover:bg-black hover:text-white"
+          >
+            Next
+          </button>
+        )}
       </div>
     </div>
   );
