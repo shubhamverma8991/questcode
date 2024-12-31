@@ -12,7 +12,7 @@ const api = axios.create({
 
 // Helper function to handle GET requests
 const getRequest = (url) => {
-  console.log(url);
+  // console.log(url);
 
   return api
     .get(url)

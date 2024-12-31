@@ -26,7 +26,7 @@ const CodingQuestions = () => {
     getCodingQuestionsByLanguage(name, page, 10) // Pass page and size to the API call
       .then((apiResponse) => {
         if (apiResponse.data.length > 0) {
-          console.log(apiResponse.data);
+          // console.log(apiResponse.data);
           setQuestions(apiResponse.data);
           setHasMore(apiResponse.data.length === 10);
         } else {

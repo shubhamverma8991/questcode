@@ -12,7 +12,7 @@ const LandingPage = () => {
     getAllLanguages()
       .then((data) => {
         setLanguages(data);
-        console.log("language ", data);
+        // console.log("language ", data);
       })
       .catch((err) => console.error(err))
       .finally(() => {
@@ -31,7 +31,7 @@ const LandingPage = () => {
   // Language Card Component
   const LanguageCard = ({ name, image }) => {
     const handleLanguageCardClick = (e) => {
-      console.log(`${name}`);
+      // console.log(`${name}`);
       navigate(`/options/${name.toLowerCase()}`);
     };
     return (

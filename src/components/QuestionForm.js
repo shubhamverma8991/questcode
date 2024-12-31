@@ -53,10 +53,10 @@ const QuestionForm = () => {
     // Call API to create the new question for the selected language
     createQuestion(selectedLanguage, questionData)
       .then((response) => {
-        console.log("Successfully Added Question for " + selectedLanguage);
+        // console.log("Successfully Added Question for " + selectedLanguage);
       })
       .catch((error) => {
-        console.error("Error creating question: ", error);
+        // console.error("Error creating question: ", error);
       });
   };
 

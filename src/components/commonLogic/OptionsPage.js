@@ -7,7 +7,7 @@ const OptionsPage = () => {
   const { name } = useParams();
 
   const questionNav = (name) => {
-    console.log("questions", name);
+    // console.log("questions", name);
 
     navigate(`/questions/${name.toLowerCase()}`);
   };
