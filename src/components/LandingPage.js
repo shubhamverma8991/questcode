@@ -64,16 +64,20 @@ const LandingPage = () => {
   };
 
   // RoadMap Card Component
-  const RoadMapCard = ({ name, image }) => {
+  const RoadMapCard = ({ name, image, description }) => {
     const handleRoadMapCardClick = (e) => {
       console.log(`roadmap+${name}`);
       alert("Work in Progress");
       // navigate(`/roadmap/${name.toLowerCase()}`);
     };
     return (
-      <div className="cursor-pointer flex flex-col items-center bg-card  p-6 rounded-lg shadow-2xl w-40" onClick={handleRoadMapCardClick}>
+      <div
+        className="cursor-pointer flex flex-col items-center bg-card  py-6 px-3 rounded-lg shadow-2xl w-48"
+        onClick={handleRoadMapCardClick}
+      >
         <img src={image} alt={`${name} logo`} className="h-16 w-16 mb-4" />
         <h4 className="text-lg text-center font-semibold text-orange-500">{name}</h4>
+        <p className="mt-4 text-center text-xs text-gray-300">{description}</p>
       </div>
     );
   };
@@ -126,6 +130,7 @@ const LandingPage = () => {
       {/* Road Map */}
       <section className="py-16 px-6" id="roadmap-section">
         <h2 className="text-2xl font-bold text-center text-orange-500 mb-6">RoadMap for Various Courses</h2>
+        <p className="text-center mb-6 text-orange-700">***Work in Progress***</p>
         <div className="flex flex-wrap justify-center gap-8">
           {roadmaploading ? (
             <>
@@ -133,7 +138,10 @@ const LandingPage = () => {
               <p>Loading RoadMap Please Wait...</p>
             </>
           ) : (
-            roadMap && roadMap.map((item) => <RoadMapCard key={item.id} name={item.coursename} image={item.courseicon} />)
+            roadMap &&
+            roadMap.map((item) => (
+              <RoadMapCard key={item.id} name={item.coursename} image={item.courseicon} description={item.description} />
+            ))
           )}
         </div>
       </section>
