@@ -5,7 +5,7 @@ export default function Footer() {
     <div>
       {/* Footer */}
       <footer className="bg-card py-2 mt-2 text-center text-gray-400">
-        <p>© 2024 PrepQuest. All Rights Reserved.</p>
+        <p>© 2025 PrepQuest. All Rights Reserved.</p>
       </footer>
     </div>
   );
