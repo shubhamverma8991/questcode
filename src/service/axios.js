@@ -2,8 +2,8 @@ import axios from "axios";
 
 // Create an Axios instance with default settings
 const api = axios.create({
-  // baseURL: "http://localhost:8080/api",
-  baseURL: "https://prepquestbackend.onrender.com/api/",
+  baseURL: "http://localhost:8080/api",
+  // baseURL: "https://prepquestbackend.onrender.com/api/",
   // Adjust the base URL to match your backend
   headers: {
     "Content-Type": "application/json",
@@ -60,7 +60,12 @@ const deleteRequest = (url) => {
 // Language API functions
 export const getAllLanguages = () => getRequest("/language/all");
 
-export const createLanguage = (data) => postRequest("/languages", data);
+export const createLanguage = (data) => postRequest("/addlanguage", data);
+
+// RoadMap API Functions
+export const getAllRoadMap = () => getRequest("/roadmap/all");
+
+export const createRoadMap = (data) => postRequest("/addroadmap", data);
 
 // Question API functions based on Language
 export const getQuestionsByLanguage = (languageName, page, size) => getRequest(`/questions/${languageName}?page=${page}&size=${size}`);

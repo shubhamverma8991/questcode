@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllLanguages } from "../service/axios";
+import { getAllLanguages, getAllRoadMap } from "../service/axios";
 import Loading from "./commonLogic/Loading";
 
 const LandingPage = () => {
   const navigate = useNavigate();
   const [languages, setLanguages] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [roadMap, setRoadMap] = useState([]);
+  const [langloading, setLangLoading] = useState(true);
+  const [roadmaploading, setRoadMapLoading] = useState(true);
 
   useEffect(() => {
+    getLanguage();
+    getCourse();
+  }, []);
+
+  // Get All Language
+  const getLanguage = () => {
     getAllLanguages()
       .then((data) => {
         setLanguages(data);
@@ -16,9 +24,22 @@ const LandingPage = () => {
       })
       .catch((err) => console.error(err))
       .finally(() => {
-        setLoading(false);
+        setLangLoading(false);
       });
-  }, []);
+  };
+
+  // Get All Courses
+  const getCourse = () => {
+    getAllRoadMap()
+      .then((data) => {
+        setRoadMap(data);
+        console.log("roadMap ", data);
+      })
+      .catch((err) => console.error(err))
+      .finally(() => {
+        setRoadMapLoading(false);
+      });
+  };
 
   // Feature Box Component
   const FeatureBox = ({ title, description }) => (
@@ -41,6 +62,22 @@ const LandingPage = () => {
       </div>
     );
   };
+
+  // RoadMap Card Component
+  const RoadMapCard = ({ name, image }) => {
+    const handleRoadMapCardClick = (e) => {
+      console.log(`roadmap+${name}`);
+      alert("Work in Progress");
+      // navigate(`/roadmap/${name.toLowerCase()}`);
+    };
+    return (
+      <div className="cursor-pointer flex flex-col items-center bg-card  p-6 rounded-lg shadow-2xl w-40" onClick={handleRoadMapCardClick}>
+        <img src={image} alt={`${name} logo`} className="h-16 w-16 mb-4" />
+        <h4 className="text-lg text-center font-semibold text-orange-500">{name}</h4>
+      </div>
+    );
+  };
+
   // Scroll to the languages section
   const scrollToLanguages = () => {
     const languagesSection = document.getElementById("languages-section");
@@ -75,10 +112,28 @@ const LandingPage = () => {
       <section id="languages-section" className="py-16 px-6">
         <h2 className="text-2xl font-bold text-center text-orange-500 mb-6">Explore Languages</h2>
         <div className="flex flex-wrap justify-center gap-8">
-          {loading ? (
-            <Loading />
+          {langloading ? (
+            <>
+              <Loading />
+              <p>Loading Languages Please Wait...</p>
+            </>
           ) : (
             languages && languages.map((item) => <LanguageCard key={item.id} name={item.languageName} image={item.languageIcon} />)
+          )}
+        </div>
+      </section>
+
+      {/* Road Map */}
+      <section className="py-16 px-6" id="roadmap-section">
+        <h2 className="text-2xl font-bold text-center text-orange-500 mb-6">RoadMap for Various Courses</h2>
+        <div className="flex flex-wrap justify-center gap-8">
+          {roadmaploading ? (
+            <>
+              <Loading />
+              <p>Loading RoadMap Please Wait...</p>
+            </>
+          ) : (
+            roadMap && roadMap.map((item) => <RoadMapCard key={item.id} name={item.coursename} image={item.courseicon} />)
           )}
         </div>
       </section>

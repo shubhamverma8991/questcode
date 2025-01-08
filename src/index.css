@@ -81,15 +81,30 @@
   font-weight: bold; /* Bold for keywords */
 }
 
+.keyword {
+  color: #c586c0; /* Lavender for keywords */
+  font-weight: bold; /* Bold for keywords */
+}
+
 .codeblock > div > code .string {
+  color: #ce9178; /* Warm orange for strings */
+}
+.string {
   color: #ce9178; /* Warm orange for strings */
 }
 
 .codeblock > div > code .number {
   color: #b5cea8; /* Soft green for numbers */
 }
+.number {
+  color: #b5cea8; /* Soft green for numbers */
+}
 
 .codeblock > div > code .comment {
+  color: #75715e; /* Muted gray for comments */
+  font-style: italic; /* Italics for comments */
+}
+.comment {
   color: #75715e; /* Muted gray for comments */
   font-style: italic; /* Italics for comments */
 }

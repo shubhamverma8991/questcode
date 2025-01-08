@@ -61,7 +61,7 @@ const LanguagePage = () => {
   };
 
   // Function to render multiple code blocks and their respective Copy buttons
-  const renderContent = (content, id) => {
+  const renderContent = (content, id, additionalClass = "") => {
     const sanitizedContent = DOMPurify.sanitize(content);
 
     // Split content into separate code blocks if there are multiple
@@ -87,7 +87,7 @@ const LanguagePage = () => {
                   </button>
                 </div>
               ) : (
-                <div dangerouslySetInnerHTML={{ __html: block }} />
+                <div dangerouslySetInnerHTML={{ __html: block }} className={additionalClass} />
               )}
             </div>
           );
@@ -104,10 +104,10 @@ const LanguagePage = () => {
     <div className="space-y-6">
       <h2 className="text-center text-3xl mt-3 mb-3 text-secondary font-bold">{name.toUpperCase()} Theory Questions</h2>
       {questions.length > 0 ? (
-        questions.map((q) => (
+        questions.map((q, index) => (
           <div key={q.id} className="bg-card p-6 max-sm:px-3 rounded-lg shadow-md">
-            <h3 className="text-xl font-bold text-secondary mb-2">
-              {q.id}. {q.question}
+            <h3 className=" flex text-xl font-bold text-secondary mb-2">
+              {index + 1}. {renderContent(q.question, q.id, "text-secondary")}
             </h3>
             <div className="code-container">{renderContent(q.content, q.id)}</div>
             {q.imageExplain && (
