@@ -2,12 +2,12 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import LandingPage from "./components/LandingPage";
-import LanguagePage from "./components/LanguagePage";
+import Home from "./components/Home";
+import QuestionAndAnswersPage from "./components/QuestionAndAnswersPage";
 import ScrollToTop from "./components/commonLogic/ScrollToTop";
 import CreateLanguageForm from "./components/CreateLanguageForm";
 import QuestionForm from "./components/QuestionForm";
-import CodingQuestions from "./components/CodingQuestions";
+// import CodingQuestions from "./components/CodingQuestions";
 import OptionsPage from "./components/commonLogic/OptionsPage";
 
 function App() {
@@ -18,10 +18,11 @@ function App() {
         <Header />
         <div className="flex-grow">
           <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/questions/:name" element={<LanguagePage />} />
-            <Route path="/codequestions/:name" element={<CodingQuestions />} />
-            <Route path="/options/:name" element={<OptionsPage />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/:name" element={<QuestionAndAnswersPage />} />
+            <Route path="/:name/code" element={<QuestionAndAnswersPage />} />
+            {/* <Route path="/:name/pseudocode" element={<QuestionAndAnswersPage />} /> */}
+            <Route path="/:name/options" element={<OptionsPage />} />
             <Route path="/addlang" element={<CreateLanguageForm />} />
             <Route path="/addques" element={<QuestionForm />} />
           </Routes>

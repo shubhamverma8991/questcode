@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getAllLanguages, getAllRoadMap } from "../service/axios";
 import Loading from "./commonLogic/Loading";
 
-const LandingPage = () => {
+const Home = () => {
   const navigate = useNavigate();
   const [languages, setLanguages] = useState([]);
   const [roadMap, setRoadMap] = useState([]);
@@ -53,7 +53,7 @@ const LandingPage = () => {
   const LanguageCard = ({ name, image }) => {
     const handleLanguageCardClick = (e) => {
       // console.log(`${name}`);
-      navigate(`/options/${name.toLowerCase()}`);
+      navigate(`/${name.toLowerCase()}/options`);
     };
     return (
       <div className="cursor-pointer flex flex-col items-center bg-card  p-6 rounded-lg shadow-2xl w-40" onClick={handleLanguageCardClick}>
@@ -122,7 +122,7 @@ const LandingPage = () => {
               <p>Loading Languages Please Wait...</p>
             </>
           ) : (
-            languages && languages.map((item) => <LanguageCard key={item.id} name={item.languageName} image={item.languageIcon} />)
+            languages && languages.map((item) => <LanguageCard key={item.id} name={item.name} image={item.icon} />)
           )}
         </div>
       </section>
@@ -138,7 +138,7 @@ const LandingPage = () => {
               <p>Loading RoadMap Please Wait...</p>
             </>
           ) : (
-            roadMap &&
+            roadMap.length > 0 &&
             roadMap.map((item) => (
               <RoadMapCard key={item.id} name={item.coursename} image={item.courseicon} description={item.description} />
             ))
@@ -149,4 +149,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default Home;

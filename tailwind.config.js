@@ -8,6 +8,7 @@ module.exports = {
       colors: {
         primary: "#FF6600",
         secondary: "#FF9900",
+        tertiary: "#FFC166",
         background: "#121212",
         card: "#1E1E1E",
         border: "#333333",

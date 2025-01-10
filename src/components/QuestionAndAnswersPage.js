@@ -1,16 +1,17 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import { getCodingQuestionsByLanguage } from "../service/axios";
+import { getCodingQuestionsByLanguage, getQuestionsByLanguage } from "../service/axios";
 import Loading from "./commonLogic/Loading";
 import DOMPurify from "dompurify"; // Import DOMPurify
 import { MdOutlineContentCopy } from "react-icons/md";
 
-const CodingQuestions = () => {
+const QuestionAndAnswersPage = () => {
   const { name } = useParams();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const initialPage = parseInt(queryParams.get("page")) || 0; // Default to 0 if not present
   const [page, setPage] = useState(initialPage);
+  const size = 10;
   const navigate = useNavigate();
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -21,30 +22,45 @@ const CodingQuestions = () => {
   const codeBlockRefs = useRef({});
 
   useEffect(() => {
-    // Fetch questions dynamically for the specified language
-    setLoading(true);
-    getCodingQuestionsByLanguage(name, page, 10) // Pass page and size to the API call
-      .then((apiResponse) => {
-        if (apiResponse.data.length > 0) {
-          // console.log(apiResponse.data);
-          setQuestions(apiResponse.data);
-          setHasMore(apiResponse.data.length === 10);
-        } else {
-          setHasMore(false);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching questions: ", error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [name, page]); // Add page and size to the dependency array
+    const fetchQuestions = (fetchFunction, tableName) => {
+      setLoading(true);
+      fetchFunction(tableName, page, size)
+        .then((apiResponse) => {
+          if (apiResponse.data.length > 0) {
+            setQuestions(apiResponse.data);
+            setHasMore(apiResponse.data.length === size);
+          } else {
+            setHasMore(false);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching questions: ", error);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    };
+
+    const pathSegments = location.pathname.split("/");
+    const tablename = `${pathSegments[1]}${pathSegments[2]}`;
+
+    console.log("Questions Page ", `${pathSegments[2]}`);
+    if (`${pathSegments[2]}` === "code") {
+      console.log("here");
+      fetchQuestions(getCodingQuestionsByLanguage, `${pathSegments[1]}`);
+    } else {
+      fetchQuestions(getQuestionsByLanguage, tablename);
+    }
+  }, [name, page, location.pathname]);
 
   useEffect(() => {
+    // Get the current path from location.pathname
+    const pathSegments = location.pathname.split("/"); // Split the path
+    const basePath = `/${pathSegments[1]}/${pathSegments[2]}`; // Dynamically construct the base path
+
     // Update the URL with the current page number
-    navigate(`/codequestions/${name}?page=${page}`);
-  }, [name, page, navigate]);
+    navigate(`${basePath}?page=${page}`);
+  }, [name, page, navigate, location.pathname]);
 
   // Clipboard function directly inside the component
   const copyToClipboard = (id, codeIndex) => {
@@ -61,7 +77,7 @@ const CodingQuestions = () => {
   };
 
   // Function to render multiple code blocks and their respective Copy buttons
-  const renderContent = (content, id) => {
+  const renderContent = (content, id, additionalClass = "") => {
     const sanitizedContent = DOMPurify.sanitize(content);
 
     // Split content into separate code blocks if there are multiple
@@ -87,7 +103,7 @@ const CodingQuestions = () => {
                   </button>
                 </div>
               ) : (
-                <div dangerouslySetInnerHTML={{ __html: block }} />
+                <div dangerouslySetInnerHTML={{ __html: block }} className={additionalClass} />
               )}
             </div>
           );
@@ -102,14 +118,19 @@ const CodingQuestions = () => {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-center text-3xl mt-3 mb-3 text-secondary font-bold">{name.toUpperCase()} Coding Questions</h2>
+      <h2 className="text-center text-3xl mt-3 mb-3 text-secondary font-bold">{name.toUpperCase()} Theory Questions</h2>
       {questions.length > 0 ? (
-        questions.map((q) => (
+        questions.map((q, index) => (
           <div key={q.id} className="bg-card p-6 max-sm:px-3 rounded-lg shadow-md">
-            <h3 className="text-xl font-bold text-secondary mb-2">
-              {q.id}. {q.question}
+            <h3 className=" flex text-xl font-bold text-secondary mb-2">
+              {index + 1 + page * size}.&nbsp; {renderContent(q.question, q.id, "text-secondary")}
             </h3>
-            <div className="code-container">{renderContent(q.content, q.id)}</div>
+            <div className="code-container">
+              <div className="font-extrabold text-tertiary mb-2">Explanation - </div> {renderContent(q.content, q.id)}
+            </div>
+            {q.imageExplain && (
+              <img src={q.imageExplain} alt="Explanation" className="max-w-full h-auto mt-4 border border-gray-300 rounded-lg shadow-md" />
+            )}
             {q.askedInCompany && (
               <p className="text-sm text-gray-500 mt-4">
                 Asked in: <span className="font-semibold">{q.askedInCompany}</span>
@@ -157,4 +178,4 @@ const CodingQuestions = () => {
   );
 };
 
-export default CodingQuestions;
+export default QuestionAndAnswersPage;
