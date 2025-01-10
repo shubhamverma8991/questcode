@@ -12,6 +12,8 @@ module.exports = {
         background: "#121212",
         card: "#1E1E1E",
         border: "#333333",
+        accent: "#FF6600",
+        buttontext: "#FFFFFF",
         textPrimary: "#FFFFFF",
         textSecondary: "#B3B3B3",
         success: "#4CAF50",
@@ -25,3 +27,17 @@ module.exports = {
   },
   plugins: [],
 };
+
+// colors: {
+//   primary: "#FF6600",
+//   secondary: "#FF9900",
+//   tertiary: "#FFC166",
+//   background: "#121212",
+//   card: "#1E1E1E",
+//   border: "#333333",
+//   textPrimary: "#FFFFFF",
+//   textSecondary: "#B3B3B3",
+//   success: "#4CAF50",
+//   error: "#FF4D4D",
+//   info: "#4DAFFF",
+// },
