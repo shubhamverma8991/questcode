@@ -2,8 +2,8 @@ import axios from "axios";
 
 // Create an Axios instance with default settings
 const api = axios.create({
-  baseURL: "http://localhost:8080/api",
-  // baseURL: "https://prepquestbackend.onrender.com/api/",
+  // baseURL: "http://localhost:8080/api",
+  baseURL: "https://prepquestbackend.onrender.com/api/",
   // Adjust the base URL to match your backend
   headers: {
     "Content-Type": "application/json",
