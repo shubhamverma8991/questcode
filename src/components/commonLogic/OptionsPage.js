@@ -23,7 +23,7 @@ const OptionsPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center" style={{ height: "90vh" }}>
-      <h1 className="m-4 font-bold text-2xl">Select an Option</h1>
+      <h1 className="m-4 font-bold text-white text-2xl">Select an Option</h1>
       <div className="flex flex-wrap justify-center gap-4">
         {options.map((option, index) => (
           <div
@@ -32,7 +32,7 @@ const OptionsPage = () => {
             onClick={() => navigateTo(option.suffix)}
           >
             <div className="text-lg font-semibold text-center">
-              <p className="mt-2 mb-2  text-orange-500">{name.toUpperCase()}</p>
+              <p className="mt-2 mb-2  text-textSecondary">{name.toUpperCase()}</p>
               <p className=" text-orange-500">{option.label}</p>
             </div>
           </div>

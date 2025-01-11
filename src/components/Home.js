@@ -93,7 +93,7 @@ const Home = () => {
     <div className=" min-h-screen">
       {/* Hero Section */}
       <section className="flex flex-col items-center justify-center text-center py-20 px-6">
-        <h1 className="text-4xl font-bold text-primary mb-4">Master Programming with PrepQuest</h1>
+        <h1 className="text-4xl font-bold text-textPrimary mb-4">Master Programming with PrepQuest</h1>
         <p className="text-white max-w-xl">
           Dive into coding study materials, explore questions, answers, and pseudo-code crafted for clarity.
         </p>
@@ -107,7 +107,7 @@ const Home = () => {
 
       {/* Features Section */}
       <section className="py-16 px-6">
-        <h2 className="text-2xl font-bold text-center text-primary mb-6">Why Choose PrepQuest?</h2>
+        <h2 className="text-2xl font-bold text-center text-textPrimary mb-6">Why Choose PrepQuest?</h2>
         <div className="flex flex-wrap justify-center gap-8">
           <FeatureBox title="Comprehensive Materials" description="Questions, answers, and pseudo-code for deeper understanding." />
           <FeatureBox title="Language Variety" description="Learn from a wide range of programming languages." />
@@ -117,7 +117,7 @@ const Home = () => {
 
       {/* Languages Section */}
       <section id="languages-section" className="py-16 px-6">
-        <h2 className="text-2xl font-bold text-center text-primary mb-6">Explore Languages</h2>
+        <h2 className="text-2xl font-bold text-center text-textPrimary mb-6">Explore Languages</h2>
         <div className="flex flex-wrap justify-center gap-8">
           {langloading ? (
             <>
@@ -132,7 +132,7 @@ const Home = () => {
 
       {/* Road Map */}
       <section className="py-16 px-6" id="roadmap-section">
-        <h2 className="text-2xl font-bold text-center text-orange-500 mb-6">RoadMap for Various Courses</h2>
+        <h2 className="text-2xl font-bold text-center text-textPrimary mb-6">RoadMap for Various Courses</h2>
         <p className="text-center mb-6 text-orange-700">***Work in Progress***</p>
         <div className="flex flex-wrap justify-center gap-8">
           {roadmaploading ? (

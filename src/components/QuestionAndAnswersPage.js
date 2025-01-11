@@ -126,7 +126,7 @@ const QuestionAndAnswersPage = () => {
               {index + 1 + page * size}.&nbsp; {renderContent(q.question, q.id, "text-secondary")}
             </h3>
             <div className="code-container">
-              <div className="font-extrabold text-tertiary mb-2">Explanation - </div> {renderContent(q.content, q.id)}
+              <div className="font-extrabold text-textTertiary mb-2">Explanation - </div> {renderContent(q.content, q.id)}
             </div>
             {q.imageExplain && (
               <img src={q.imageExplain} alt="Explanation" className="max-w-full h-auto mt-4 border border-gray-300 rounded-lg shadow-md" />
