@@ -44,7 +44,7 @@ const Home = () => {
   // Feature Box Component
   const FeatureBox = ({ title, description }) => (
     <div className="max-w-sm bg-card p-6 rounded-lg shadow-xl">
-      <h3 className="text-lg font-semibold text-secondary mb-2">{title}</h3>
+      <h3 className="text-lg font-semibold text-tertiary mb-2">{title}</h3>
       <p className="text-white">{description}</p>
     </div>
   );
@@ -125,7 +125,10 @@ const Home = () => {
               <p>Loading Languages Please Wait...</p>
             </>
           ) : (
-            languages && languages.map((item) => <LanguageCard key={item.id} name={item.name} image={item.icon} />)
+            languages &&
+            languages
+              .sort((a, b) => a.name.localeCompare(b.name))
+              .map((item) => <LanguageCard key={item.id} name={item.name} image={item.icon} />)
           )}
         </div>
       </section>
