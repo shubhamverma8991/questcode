@@ -28,6 +28,7 @@ const QuestionAndAnswersPage = () => {
         .then((apiResponse) => {
           if (apiResponse.data.length > 0) {
             setQuestions(apiResponse.data);
+            console.log(apiResponse.data);
             setHasMore(apiResponse.data.length === size);
           } else {
             setHasMore(false);
@@ -131,11 +132,18 @@ const QuestionAndAnswersPage = () => {
             {q.imageExplain && (
               <img src={q.imageExplain} alt="Explanation" className="max-w-full h-auto mt-4 border border-gray-300 rounded-lg shadow-md" />
             )}
-            {q.askedInCompany && (
-              <p className="text-sm text-gray-500 mt-4">
-                Asked in: <span className="font-semibold">{q.askedInCompany}</span>
-              </p>
-            )}
+            <div className="flex flex-wrap mt-4">
+              {q.level && (
+                <p className="text-sm text-gray-500 mr-4">
+                  Level : <span className="font-semibold">{q.level}</span>
+                </p>
+              )}
+              {q.askedInCompany && (
+                <p className="text-sm text-gray-500">
+                  Asked in : <span className="font-semibold">{q.askedInCompany}</span>
+                </p>
+              )}
+            </div>
           </div>
         ))
       ) : (
