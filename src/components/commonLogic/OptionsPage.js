@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 const OptionsPage = () => {
   const navigate = useNavigate();
   const { name } = useParams();
+
+  useEffect(() => {
+    document.title = `PrepQuest | Options`;
+  });
 
   if (!name) {
     return <div>Error: Language name is missing</div>;
