@@ -46,7 +46,7 @@ const QuestionAndAnswersPage = () => {
     const tablename = `${pathSegments[1]}${pathSegments[2]}`;
 
     console.log("Questions Page ", `${pathSegments[1]}`);
-    document.title = `PrepQuest | ${pathSegments[1].replace(/^./, (c) => c.toUpperCase())}`; // Update the tab name
+    document.title = `PrepQuest | ${pathSegments[1].replace(/^./, (c) => c.toUpperCase())} | Theory`; // Update the tab name
     if (`${pathSegments[2]}` === "code") {
       console.log("here");
       document.title = `PrepQuest | ${pathSegments[1].replace(/^./, (c) => c.toUpperCase())} | ${pathSegments[2].replace(/^./, (c) =>
