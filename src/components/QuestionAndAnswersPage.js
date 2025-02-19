@@ -45,9 +45,13 @@ const QuestionAndAnswersPage = () => {
     const pathSegments = location.pathname.split("/");
     const tablename = `${pathSegments[1]}${pathSegments[2]}`;
 
-    console.log("Questions Page ", `${pathSegments[2]}`);
+    console.log("Questions Page ", `${pathSegments[1]}`);
+    document.title = `Prepquest | ${pathSegments[1].replace(/^./, (c) => c.toUpperCase())}`; // Update the tab name
     if (`${pathSegments[2]}` === "code") {
       console.log("here");
+      document.title = `Prepquest | ${pathSegments[1].replace(/^./, (c) => c.toUpperCase())} | ${pathSegments[2].replace(/^./, (c) =>
+        c.toUpperCase()
+      )}`; // Update the tab name
       fetchQuestions(getCodingQuestionsByLanguage, `${pathSegments[1]}`);
     } else {
       fetchQuestions(getQuestionsByLanguage, tablename);
